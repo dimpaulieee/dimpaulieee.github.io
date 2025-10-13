@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paul Andrei Timpog - Interactive CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1447 50%, #2d1b69 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Animated starfield background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(138, 43, 226, 0.8), 0 0 60px rgba(138, 43, 226, 0.6); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            background: rgba(138, 43, 226, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 5px solid rgba(138, 43, 226, 0.6);
+            box-shadow: 0 0 50px rgba(138, 43, 226, 0.8);
+            animation: glow 3s ease-in-out infinite;
+            object-fit: cover;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ff6ec4, #7873f5, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #b19cd9;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            background: rgba(138, 43, 226, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+        }
+
+        /* Section styling */
+        section {
+            margin: 4rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.3s;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(138, 43, 226, 0.4);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ff6ec4, #7873f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h3 {
+            color: #b19cd9;
+            margin: 1rem 0 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .achievement-item {
+            background: rgba(138, 43, 226, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 3px solid #7873f5;
+            transition: all 0.3s;
+        }
+
+        .achievement-item:hover {
+            background: rgba(138, 43, 226, 0.2);
+            transform: translateX(10px);
+        }
+
+        .experience-item {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid #ff6ec4;
+        }
+
+        .experience-title {
+            font-size: 1.3rem;
+            color: #ff6ec4;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-org {
+            color: #7873f5;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        ul.details {
+            list-style: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        ul.details li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        ul.details li:before {
+            content: "⭐";
+            position: absolute;
+            left: 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-category {
+            background: rgba(138, 43, 226, 0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .skill-category h4 {
+            color: #ff6ec4;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 20px;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: rise 15s infinite;
+            z-index: 0;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .profile-img { width: 200px; height: 200px; }
+            nav ul { gap: 1rem; }
+            .achievement-grid, .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div id="particles"></div>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#skills">Skills</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="home" class="hero">
+            <img src="profile.jpg" alt="Paul Andrei Timpog" class="profile-img">
+            <h1>PAUL ANDREI COMIA TIMPOG</h1>
+            <p class="subtitle">Robotics Innovator | Student Leader | STEM Advocate</p>
+            <div class="contact-info">
+                <div class="contact-item">📧 paulandreitimpogjslk0@gmail.com</div>
+                <div class="contact-item">📱 0993-884-5652</div>
+                <div class="contact-item">📍 Dinalupihan, Bataan</div>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2>🎓 Education</h2>
+            
+            <div class="experience-item">
+                <div class="experience-title">Associate in Aviation Electronics Technology (AAET)</div>
+                <div class="experience-org">Philippine State College of Aeronautics – Basa Air Base Campus | Current</div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-title">Science, Technology, Engineering, and Mathematics (STEM)</div>
+                <div class="experience-org">Tapinac Senior High School | 2025 - With High Honor</div>
+                <ul class="details">
+                    <li>Journalist of the Year</li>
+                    <li>Supreme Secondary Learner Government Meritorious Service Awardee as President</li>
+                    <li>Leadership Awardee</li>
+                    <li>Outstanding Performance in Science, Mathematics, Research, Innovation, and Arts</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-title">Science, Technology and Engineering Program (STE)</div>
+                <div class="experience-org">Olongapo City National High School | 2023</div>
+                <ul class="details">
+                    <li>Batch Valedictorian</li>
+                    <li>With High Honors</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="achievements">
+            <h2>🏆 Achievements & Recognition</h2>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <h3>🤖 Robotics & Innovation</h3>
+                    <p>First-ever Innovation Project from Olongapo City featured by GMA NEWS</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>🥇 7th Place</h3>
+                    <p>Philippine Robotics Olympiad</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>🥈 12th Place</h3>
+                    <p>National STEM Expo - Ideathon</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>🥈 2nd Place</h3>
+                    <p>Regional Science and Technology Fair (Robotics)</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>✍️ 2nd Place</h3>
+                    <p>Science and Technology Writing - Division Schools Press Conference 2024</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>🔬 2nd Place</h3>
+                    <p>Capstone Category - Division Research Congress 2024</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>🎓 DOST-SEI Scholar</h3>
+                    <p>Department of Science and Technology Scholarship Passer 2025</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>💼 Experience</h2>
+            
+            <div class="experience-item">
+                <div class="experience-title">Founder & CEO</div>
+                <div class="experience-org">Dimpaulieee's Robotics Lab | 2024 - Present</div>
+                <ul class="details">
+                    <li>Established robotics business at age 17</li>
+                    <li>Assisted 20+ students nationwide with research and capstone projects</li>
+                    <li>Designed 3D models and schematic diagrams for various clients</li>
+                    <li>Provided data analysis support for qualitative, quantitative, and mixed-method research</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-title">Spokesperson, Central Board of Student Leaders</div>
+                <div class="experience-org">PhilSCA-BAB Supreme Student Council | Present</div>
+                <ul class="details">
+                    <li>Assisted in creating programs and legislation for campus improvement</li>
+                    <li>Represented student body in official communications</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-title">Supreme Secondary Learner Government President</div>
+                <div class="experience-org">Tapinac Senior High School | 2024-2025</div>
+                <ul class="details">
+                    <li>Board Member of Division Federation of SSLG in Olongapo City</li>
+                    <li>Chairperson of Coordinating Council and Academic Assistance Committee</li>
+                    <li>Created school website for program monitoring and transparency</li>
+                    <li>Represented school in local to national meetings and seminars</li>
+                    <li>Promoted youth empowerment and good governance</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-title">Science and Technology Head Editor</div>
+                <div class="experience-org">Avant Garde: TSHS School Publication | 2023-2025</div>
+                <ul class="details">
+                    <li>Published 30+ Science and Technology articles</li>
+                    <li>Won 2nd Place at Division Schools Press Conference 2024</li>
+                    <li>Regional Schools Press Conference Qualifier</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-title">Arduino Team Captain</div>
+                <div class="experience-org">SCIENTIA: TSHS Science Club | 2023-2024</div>
+                <ul class="details">
+                    <li>Pioneered robotics at TSHS through Arduino UNO seminars</li>
+                    <li>Represented school in local to national competitions</li>
+                    <li>Showcased PYROSAGE, BioQuanta, and Project K3 prototypes</li>
+                    <li>Interviewed by K5 FM and GMA 24 Oras - Game Changer Segment</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>⚡ Skills & Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Technical Skills</h4>
+                    <div class="skill-item">Schematic Design</div>
+                    <div class="skill-item">Robotics Engineering</div>
+                    <div class="skill-item">Data Analysis</div>
+                    <div class="skill-item">Electronics</div>
+                    <div class="skill-item">Microsoft Office</div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Programming</h4>
+                    <div class="skill-item">C++</div>
+                    <div class="skill-item">Arduino</div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Soft Skills</h4>
+                    <div class="skill-item">Leadership</div>
+                    <div class="skill-item">Communication</div>
+                    <div class="skill-item">Analytical Thinking</div>
+                    <div class="skill-item">Problem-Solving</div>
+                    <div class="skill-item">Fast Learner</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Create starfield
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 100 + 50 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'all 0.6s ease-out';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
