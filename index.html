@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paul Andrei Timpog - Welcome</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Space background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        .star.small {
+            width: 1px;
+            height: 1px;
+        }
+
+        .star.medium {
+            width: 2px;
+            height: 2px;
+        }
+
+        .star.large {
+            width: 3px;
+            height: 3px;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Spline viewer container */
+        .spline-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        spline-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Overlay content */
+        .overlay-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        /* Title styling */
+        .title-container {
+            text-align: center;
+            margin-bottom: 40px;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, #ff6ec4, #7873f5, #4facfe, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 50px rgba(138, 43, 226, 0.5);
+            animation: float 6s ease-in-out infinite;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #b19cd9;
+            margin-top: 1rem;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.7);
+            animation: subtitleGlow 3s ease-in-out infinite;
+        }
+
+        /* Christmas countdown - TRANSPARENT VERSION */
+        .christmas-countdown {
+            background: transparent; /* Changed to transparent */
+            backdrop-filter: blur(5px); /* Reduced blur */
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
+            border-radius: 20px;
+            padding: 25px 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 50, 50, 0.2); /* Reduced shadow */
+            pointer-events: auto;
+            animation: pulse 2s infinite;
+        }
+
+        .countdown-title {
+            font-size: 1.5rem;
+            color: #ffd700; /* Changed to gold */
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Added text shadow */
+        }
+
+        .countdown-timer {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .time-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff; /* Changed to white */
+            text-shadow: 0 0 10px #ffd700, 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .time-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9); /* Brighter white */
+            margin-top: 5px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Enter CV Button */
+        .enter-button {
+            pointer-events: auto;
+            position: relative;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #8a2be2, #4facfe);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+            animation: buttonGlow 2s infinite;
+            box-shadow: 0 0 40px rgba(138, 43, 226, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .enter-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 60px rgba(138, 43, 226, 1);
+            animation: none;
+        }
+
+        .enter-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: rise 20s infinite;
+            z-index: 0;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        @keyframes subtitleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(138, 43, 226, 0.7); }
+            50% { text-shadow: 0 0 40px rgba(138, 43, 226, 1); }
+        }
+
+        @keyframes buttonGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(138, 43, 226, 0.7); }
+            50% { box-shadow: 0 0 60px rgba(138, 43, 226, 1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 50, 50, 0.2);
+            }
+            50% { 
+                transform: scale(1.02);
+                box-shadow: 0 0 30px rgba(255, 50, 50, 0.3);
+            }
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .christmas-countdown {
+                padding: 15px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .countdown-timer {
+                gap: 10px;
+            }
+            
+            .time-value {
+                font-size: 1.8rem;
+            }
+            
+            .enter-button {
+                padding: 15px 30px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .countdown-timer {
+                flex-wrap: wrap;
+            }
+            
+            .time-unit {
+                min-width: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Starfield Background -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Particle Effects -->
+    <div id="particles"></div>
+    
+    <div class="container">
+        <!-- Spline 3D Viewer -->
+        <div class="spline-container">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.5/build/spline-viewer.js"></script>
+            <spline-viewer url="https://prod.spline.design/rheQJ8QTg6jKCZX5/scene.splinecode"></spline-viewer>
+        </div>
+        
+        <!-- Overlay Content -->
+        <div class="overlay-content">
+            <div class="title-container">
+                <h1>PAUL ANDREI TIMPOG</h1>
+                <p class="subtitle">Robotics Innovator | Student Leader | STEM Advocate</p>
+            </div>
+            
+            <!-- Christmas Countdown - NOW TRANSPARENT -->
+            <div class="christmas-countdown">
+                <div class="countdown-title">
+                    <span>🎄</span>
+                    Countdown to Christmas
+                    <span>🎄</span>
+                </div>
+                <div class="countdown-timer" id="countdown">
+                    <div class="time-unit">
+                        <div class="time-value" id="days">00</div>
+                        <div class="time-label">Days</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="hours">00</div>
+                        <div class="time-label">Hours</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="minutes">00</div>
+                        <div class="time-label">Minutes</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="seconds">00</div>
+                        <div class="time-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enter CV Button -->
+            <button class="enter-button" onclick="enterCV()">
+                Enter Interactive CV
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Create starfield
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const size = Math.random();
+            if (size < 0.6) {
+                star.classList.add('small');
+            } else if (size < 0.9) {
+                star.classList.add('medium');
+            } else {
+                star.classList.add('large');
+            }
+            
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 10; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 80 + 40 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 15 + 20) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Christmas Countdown
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            let christmas = new Date(currentYear, 11, 25); // December 25
+            
+            // If Christmas has passed this year, set for next year
+            if (now > christmas) {
+                christmas = new Date(currentYear + 1, 11, 25);
+            }
+            
+            const diff = christmas - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            // Add pulse animation when seconds change
+            const secondsElement = document.getElementById('seconds');
+            secondsElement.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                secondsElement.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
+
+        // Enter CV function
+        function enterCV() {
+            // Add transition effect
+            document.querySelector('.container').style.opacity = '0';
+            document.querySelector('.container').style.transform = 'scale(1.5)';
+            document.querySelector('.container').style.transition = 'all 0.8s ease-in-out';
+            
+            // Wait for transition then redirect
+            setTimeout(() => {
+                window.location.href = 'cv.html'; // Your CV page
+            }, 800);
+        }
+
+        // Add some interactivity to the button
+        const button = document.querySelector('.enter-button');
+        button.addEventListener('mouseenter', () => {
+            // Create sparkle effect
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.position = 'absolute';
+                sparkle.style.width = '10px';
+                sparkle.style.height = '10px';
+                sparkle.style.background = 'radial-gradient(circle, #ffd700, transparent)';
+                sparkle.style.borderRadius = '50%';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animation = 'sparkleFall 1s forwards';
+                button.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        });
+
+        // Add CSS for sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkleFall {
+                0% { transform: translateY(0) scale(1); opacity: 1; }
+                100% { transform: translateY(50px) scale(0); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
